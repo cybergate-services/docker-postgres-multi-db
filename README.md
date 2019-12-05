@@ -23,7 +23,7 @@ Clone the repository, mount its directory as a volume into
 (`docker-compose` syntax):
 
     myapp-postgresql:
-        image: postgres:9.6.2
+        image: postgres:11
         volumes:
             - ../docker-postgresql-multiple-databases:/docker-entrypoint-initdb.d
         environment:
@@ -35,17 +35,18 @@ Clone the repository, mount its directory as a volume into
 Clone the repository, build and push the image to your Docker repository,
 for example for Google Private Repository do the following:
 
-    docker build --tag=eu.gcr.io/your-project/postgres-multi-db .
-    gcloud docker -- push eu.gcr.io/your-project/postgres-multi-db
+    docker build --tag=cybergatelabs/postgres-multi-db .
+    gcloud docker -- push cybergatelabs/postgres-multi-db
 
 You still need to pass the `POSTGRES_MULTIPLE_DATABASES` environment variable
 to the container:
 
     myapp-postgresql:
-        image: eu.gcr.io/your-project/postgres-multi-db
+        image: cybergatelabs/postgres-multi-db
         environment:
             - POSTGRES_MULTIPLE_DATABASES="DB1,ownerOfDB1: DB2,ownerOfDB2: ...DB(n), ownerOfDB(n)"
-            - POSTGRES_PASSWORD=
+            - POSTGRES_PASSWORD=CHANGE-ME
+            - POSTGRES_USER= 
 
 ### Non-standard database names
 
